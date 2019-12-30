@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<style type="text/css">
+		.total{
+			width: 400px;
+			height: 600px;
+			background-color: #F9F9F9;
+			border: 2px solid #FFFFCC;
+		}
+		.head{
+			width: 400px;
+			height: 50px;
+			background-color: white;
+			border-bottom: 1px solid #F9F9F9;
+			position: relative;
+		}
+		.title{
+			position: relative;
+			top: 13px;
+			font-size: 20px;
+			display: inline;
+		}
+	    .menu{
+	    	background-color: white;
+	    	height: 40px;
+	    	position: relative;
+	    }
+		label{
+			position: relative;
+			top: 10px;
+			margin-right: 30px;
+		}
+		.public{
+			clear: both;
+			width: 400px;
+			height: 120px;
+			background-color: white;
+			position: relative;
+		}
+		.centent{
+			width: 400px;
+			height: auto;
+		}
+		.back{
+			display:inline;
+			float: left;
+			position: relative;
+			top: 17px;
+			font-size: 15px;
+		}
+	</style>
+</head>
+<body>
+	<center>
+      <div class="total">
+      	<div class="head"><div onclick="window.location.href='/thinkphp/index.php/index/personal'" class="back">返回</div><div class="title">订单</div></div>
+      	<div class="menu">
+      		<label>全部</label>
+      		<label class="nopay">待付款</label>
+      		<label class="delivere">待发货</label>
+      		<label class="evaluate">待评价</label>
+      		<label class="refund_money">退款</label></div>
+      	<div class="content">
+      		{volist name='aaa' id='val'}
+      		<!-- {volist name='val' id='v'}
+      		{$v['order_id']}
+      		{/volist} -->
+      		<div class="centent">
+      				<div style="background-color: white;margin-top: 20px;height: 40px;text-align: left;position: relative;">
+      				<label>订单号：</label>
+      				<label style="position: relative;right: 40px;" class="order_id">{$v['order_id']}</label>
+      				<label></label>
+      			</div>
+      			    
+      			    {volist name='val' id='v'}
+      	<div class="public">
+                <input name="id" style="display: none;" value="" class="id">
+                <div style="float: left;width: 50px;height: 100px;position: absolute;">
+                </div>
+                <img src="{$v['img']}" style="width: 150px;height: 100px;float: left;">
+                
+                <h5 style="color: #282828;">{$v['title']}</h5>
+                <div style="width: 300px;height: 21px;" class="ee">
+                <div style="color: red;float: left;position: relative;">￥
+                	<div style="color: red;float: right;"  class="price">{$v['price']}</div></div>
+                <div class="stepper" style="float: right;color: red;position: relative;bottom:10px;left: 80px;">
+                	<label class="num">{$v['num']}</label><label>件</label>
+                </div>
+                </div>
+         </div>
+                {/volist}
+          <div style="width: 400px;height: 40px;color: red;text-align:right;margin-top:10px;background-color: white">
+                	<label class="delete">删除订单</label>
+                	<label class="pay">去支付</label>
+          </div>
+                
+      
+      </div>
+      {/volist}
+      	</div>
+      <div class="content1">
+  </div>
+      <div class="content2">
+      		<div class="centent2">
+      </div>
+      	</div>
+      <div class="content3" style="display: none;">
+      	    <div class="centent3">
+            </div>
+       <div>
+       	<div style="width: 400px;height: 50px;margin-top: 20px;background-color: white">
+       		<input type="radio" name="radio" style="">好评
+       		<input type="radio" name="radio" style="">中评
+       		<input type="radio" name="radio" style="">差评
+       	</div>
+       	<div>
+       		<textarea style="width: 400px;height: 200px"></textarea>
+       		<button>确认评价</button>
+       	</div>
+       </div>
+       </div>
+       </div>
+    </center>
+    <script type="text/javascript">
+    	$('.nopay').click(function(){
+    		$('.content3').hide();
+        	$('.content2').hide();
+        	$('.content1').hide();
+        	$('.two').hide();
+        	$('.content').show();
+    	})
+    	$('.delete').click(function(){
+    	var order_id=$(this).parent().parent().find('label[class=order_id]').text();
+    		$.ajax({
+    			url: '/thinkphp/index.php/index/delete_order',
+    			type: 'post',
+    			data: 'order_id='+order_id,
+    			success:function(data){
+                   alert('删除成功！');
+                   window.location.href='orderstatus.html';
+    			}
+    		})
+    		.done(function() {
+    			console.log("success");
+    		})
+    		.fail(function() {
+    			console.log("error");
+    		})
+    		.always(function() {
+    			console.log("complete");
+    		});
+    		
+    	})
+    	$('.pay').click(function(){
+    	var order_id=$(this).parent().parent().find('label[class=order_id]').text();
+        window.location.href='aplay.html?order_id='+order_id;
+    	})
+        $('.delivere').click(function(){
+        	$('.content3').hide();
+        	$('.content').hide();
+        	$('.content2').hide();
+        	$('.content1').show();
+        	$('.order').show();
+        	$('.content1').html('');
+    		$.ajax({
+    			url: '/thinkphp/index.php/index/orderstatus1',
+    			type: 'post',
+    			data: '',
+    			success:function(data){
+                   $.each(JSON.parse(data),function(k,v){
+                   	$.each(v,function(k1,v1){
+                        s=v1.order_id;
+                   	})
+                  $('.content1').append('<div class="centent">'
+      				+'<div style="background-color: white;margin-top: 20px;height: 40px;text-align: left;position: relative;">'
+      				+'<label>订单号：</label>'
+      				+'<label style="position: relative;right: 40px;" class="order_id">'+s+'</label>'
+      				+'<label></label>'
+      			   +'</div></div>');
+      			    $.each(v,function(k1, v1) {
+      			    	$('.centent').append('<div class="public two">'
+                +'<input name="id" style="display: none;" value="" class="id">'
+                +'<div style="float: left;width: 50px;height: 100px;position: absolute;">'
+                +'</div>'
+                +'<img src="'+v1.img+'" style="width: 150px;height: 100px;float: left;">'
+                
+                +'<h5 style="color: #282828;">'+v1.title+'</h5>'
+                +'<div style="width: 300px;height: 21px;" class="ee">'
+                +'<div style="color: red;float: left;position: relative;">￥'
+                	+'<div style="color: red;float: right;"  class="price">'+v1.price+'</div></div>'
+                +'<div class="stepper" style="float: right;color: red;position: relative;bottom:10px;left: 80px;">'
+                	+'<label class="num">'+v1.num+'</label><label>件</label>'
+                +'</div>'
+                +'</div>'
+         +'</div>');
+      			    });
+      			   $('.content1').append('<div style="width: 400px;height: 20px;color: red;text-align:right;margin-top:10px;background-color: white" class="query">'
+         +'确认收货</div>');
+    		})
+                   $('.public').show();
+               }
+           })
+    		.done(function() {
+    			console.log("success");
+    		})
+    		.fail(function() {
+    			console.log("error");
+    		})
+    		.always(function() {
+    			console.log("complete");
+    		})
+        })
+        $(".content1").delegate(".query", "click", function(){
+        // 这里的this指向触发点击事件的div元素(Element)
+         var order_id=$(this).prev().find('label[class=order_id]').text();
+          alert(order_id);
+            $.ajax({
+            	url: '/thinkphp/index.php/index/query',
+            	type: 'post',
+            	data: 'order_id='+order_id,
+            	success:function(data){
+            	if (data=='ok') {
+            		alert('收货成功');
+            	}else{
+            		alert('收货失败');
+            	}
+            }
+            })
+            .done(function() {
+            	console.log("success");
+            })
+            .fail(function() {
+            	console.log("error");
+            })
+            .always(function() {
+            	console.log("complete");
+            });
+    })
+         $('.evaluate').click(function(){
+         	$('.content3').hide();
+        	$('.content').hide();
+        	$('.content1').hide();
+        	$('.content2').show();
+        	str='';
+    		$.ajax({
+    			url: '/thinkphp/index.php/index/orderstatus2',
+    			type: 'post',
+    			data: '',
+    			success:function(data){
+                   $.each(JSON.parse(data),function(k,v){
+                      str+='<div class="centent" style="background-color:white;"><div class="public" style="background-color:white;">'
+      				+'<div style="background-color: white;margin-top: 20px;height: 40px;text-align: left;position: relative;"><label>订单号：</label>'
+      				+'<label style="position: relative;right: 40px;" class="order_id">'+v.order_id+'</label><label></label></div>'
+                +'<input name="id" style="display: none;" value="" class="id">'
+                +'<div style="float: left;width: 50px;height: 100px;position: absolute;">'
+                +'</div><img src="'+v.img+'" style="width: 150px;height: 100px;float: left;">'
+                +'<h5 style="color: #282828;">'+v.title+'</h5>'
+                +'<div style="width: 300px;height: 21px;" class="ee">'
+                +'<div style="color: red;float: left;position: relative;">￥'
+                	+'<div style="color: red;float: right;"  class="price">'+v.price+'</div></div>'
+                +'<div class="stepper" style="float: right;color: red;position: relative;bottom:10px;left: 80px;">'
+                +'<label class="num">'+v.num+'</label><label>件</label>'
+                +'</div></div><div style="border:1px solid red;width:45px;height:30px;float:right;margin-top:10px;color:red;background-color:white;" class="query1">评价</div></div></div>';
+                   })
+                   $('.content2').html(str);
+    			}
+    		})
+    		.done(function() {
+    			console.log("success");
+    		})
+    		.fail(function() {
+    			console.log("error");
+    		})
+    		.always(function() {
+    			console.log("complete");
+    		});
+        })
+         $('.content2').delegate('.query1','click',function(){
+         	var order_id=$(this).parent().find('label[class=order_id]').text();
+         	$('.content2').hide();
+         	$('.content3').show();
+             str='';
+    		$.ajax({
+    			url: '/thinkphp/index.php/index/orderstatus3',
+    			type: 'post',
+    			data: 'order_id='+order_id,
+    			success:function(data){
+                   $.each(JSON.parse(data),function(k,v){
+                      str+='<div class="centent" style="background-color:white;"><div class="public" style="background-color:white;">'
+      				+'<div style="background-color: white;margin-top: 20px;height: 40px;text-align: left;position: relative;"><label>订单号：</label>'
+      				+'<label style="position: relative;right: 40px;" class="order_id">'+v.order_id+'</label><label></label></div>'
+                +'<input name="id" style="display: none;" value="'+v.id+'" class="id">'
+                +'<div style="float: left;width: 50px;height: 100px;position: absolute;">'
+                +'</div><img src="'+v.img+'" style="width: 150px;height: 100px;float: left;">'
+                +'<h5 style="color: #282828;">'+v.title+'</h5>'
+                +'<div style="width: 300px;height: 21px;" class="ee">'
+                +'<div style="color: red;float: left;position: relative;">￥'
+                	+'<div style="color: red;float: right;"  class="price">'+v.price+'</div></div>'
+                +'<div class="stepper" style="float: right;color: red;position: relative;bottom:10px;left: 80px;">'
+                +'<label class="num">'+v.num+'</label><label>件</label>'
+                +'</div></div></div></div>';
+                   })
+                   $('.menu').hide();
+                   $('.head').text('评价');
+                   $('.centent3').html(str);
+    			}
+    		})
+    		.done(function() {
+    			console.log("success");
+    		})
+    		.fail(function() {
+    			console.log("error");
+    		})
+    		.always(function() {
+    			console.log("complete");
+    		});
+         })
+         $('button').click(function(){
+            var radio= $('input[name="radio"]:checked').index();
+            var text= $(this).prev().val();
+            var id=$(this).parent().parent().parent().find('input[class=id]').val();
+            alert(radio);
+            alert(text);
+            alert(id);
+           if (radio==0) {
+              radio="好评";
+           }else if (radio==1) {
+           	  radio="中评";
+           }else{
+           	  radio="差评";
+           }
+           $.ajax({
+           	url: '/thinkphp/index.php/index/evaluate',
+           	type: 'post',
+           	data: 'radio='+radio+'&text='+text+'&id='+id,
+           	success:function(data){
+                if (data=='ok') {
+                	alert('评价成功');
+                	$('.menu').show();
+                    $('.head').text('订单');
+                	$('.content3').hide();
+                	$('.content2').show();
+                }else{
+                	alert('评价失败');
+                }
+           	}
+           })
+           .done(function() {
+           	console.log("success");
+           })
+           .fail(function() {
+           	console.log("error");
+           })
+           .always(function() {
+           	console.log("complete");
+           });
+           
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<title>个人中心</title>
+	<style type="text/css">
+	    .total{
+	    	width: 400px;
+	    	height: 781px;
+	    	border: 1px solid #cccccc;
+	    	position: absolute;
+	    	left: 26%;
+	    }
+		.head{
+            width: 400px;
+            height: 150px;
+            background-color: #FF6600;
+            position: fixed;
+            top: 0
+		}
+		.img{
+			width: 100px;
+			height: 100px;
+			border-radius: 50%;
+			float: left;
+			margin-left: 20px;
+			margin-top: 20px;
+			background-color: #ffffff;
+		}
+	    .name{
+	    	width: 200px;
+	    	color: #ffffff;
+	    	position:relative;
+	    	top: 55px;
+	    	right:  10px;
+	    }
+		.content{
+			width: 400px;
+			height: auto;
+			background-color: #FFCCFF;
+		}
+		.one{
+			margin-top: 140px;
+			width: 390px;
+			height: 130px;
+			background-color: #ffffff;
+		}
+		.two{
+			width: 390px;
+			height: 150px;
+			margin-top: 10px;
+			background-color: #ffffff;
+		}
+		.three{
+			width: 390px;
+			height: 100px;
+			margin-top: 10px;
+			background-color: #ffffff;
+		}
+		.bottom{
+			width: 400px;
+            height: 50px;
+            background-color: #FF6600;
+            color: white;
+            position: fixed;
+            bottom: 0
+		}
+		ul{
+			list-style-type: none;
+			float: left;
+			font-size: large;
+		}
+		li{
+			display: inline;
+			margin-right:  20px;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<div class="total">
+			<div class="head">
+				<div class="img" style="background-image: url();"></div>
+				<div class="name"><label class="id" style="display: none;"></label></div>
+				<label style="font-weight: 700;color: white;position:relative;
+	    	top: 55px;right: 70px;" class="login">请先登陆！</label>
+				<div class="set" style="display:inline;color: #ffffff;position: absolute;top:62px;margin-left: 50px">设置</div>
+			</div>
+			<div class="content">
+				<div class="one">
+					<div>
+						<div style="display: inline;float: left;font-weight: 600;">我的订单</div>
+					    <div style="display: inline;float: right;font-weight: 100;">查看我的所有订单</div>
+				    </div>
+				    <div>
+				     <ul>
+ 	            	  <li class="topay">待付款</li>
+ 	            	  <li class="delivery">待发货</li>
+ 	            	  <li>待收货</li>
+ 	            	  <li>退款/售后</li>
+ 	                 </ul>
+				    </div>
+				</div>
+				<div class="two">
+					<img src="/thinkphp/public/img/personal.jpg" style="width: 390px;height: 150px">
+				</div>
+				<div class="three">
+					<img src="/thinkphp/public/img/personal1.jpg" style="width: 390px;height: 100px">
+				</div>
+			</div>
+			<div class="bottom">
+				 <ul>
+ 	            	<li class="home">首页</li>
+ 	            	<li class="car">购物车</li>
+ 	            	<li class="personal">我的淘宝</li>
+ 	            	<li>更多…</li>
+ 	            </ul>
+			</div>
+		</div>
+	</center>
+	<script type="text/javascript">
+		$('.login').click(function(){
+			window.location.href='/thinkphp/index.php/index/login';
+		})
+		$(document).ready(function() {
+			$.ajax({
+              url: '/thinkphp/index.php/index/personal_ajax',
+              type: 'post',
+              dataType: 'text',
+              data: '',
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+              	$.each(JSON.parse(data),function(k,v) {
+              		$('.head').html('<div class="img img1" style="background-image: url(/thinkphp/public/img/'+v.img+');"></div>'
+				+'<div class="name"><label></label></div>'
+				+'<label style="font-weight: 700;color: white;position:relative;'
+	    	+'top: 55px;right: 70px;" class="login1">'+v.username+"欢迎登陆！"+'</label>'
+				+'<div class="set1" style="display:inline;color: #ffffff;position: absolute;top:53px;margin-left: 50px">设置</div>');
+              	})
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });
+		});
+		$('.head').delegate('.login1','click',function(){
+            $.ajax({
+              url: '/thinkphp/index.php/index/personal',
+              type: 'post',
+              dataType: 'text',
+              data: '',
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+              	window.location.href='out.html' ;
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });
+		})
+		$('.head').delegate('.set1','click',function(){
+            $.ajax({
+              url: '/thinkphp/index.php/index/out',
+              type: 'post',
+              dataType: 'text',
+              data: '',
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+              	window.location.href='setting.html' ;
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });
+		})
+		$('.car').click(function(){
+			window.location.href='buycar.html';
+			/*var username=$('.username').text();
+            $.ajax({
+              url: '/thinkphp/index.php/index/buycar',
+              type: 'post',
+              dataType: 'text',
+              data: '',
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+              	window.location.href='buycar.html';
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });*/
+		})
+		$('.home').click(function(){
+			window.location.href='home.html'
+			/*var id=$('.id').text();
+            $.ajax({
+              url: '/thinkphp/index.php/index/addcar',
+              type: 'post',
+              dataType: 'text',
+              data: '',
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+              	window.location.href='{:url("addcar")}?id='+ id ;
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });*/
+		})
+		$('.personal').click(function(){
+			window.location.href='personal.html';
+		})
+		$('.set').click(function(){
+			alert('请先登录');
+		})
+		$('.topay').click(function(){
+			window.location.href='orderstatus.html';
+		})
+		$('.delivery').click(function(){
+			window.location.href='orderstatus.html';
+		})
+	</script>
+</body>
+</html>

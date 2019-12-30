@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+		<input type="file" class="file" name="file" style="display: none;"/> 
+		<div class="upload">上传图片</div>
+<script>
+        $(function(){
+		$(".upload").click(function(){
+		$('input[name=file]').click();									
+	})
+	   $('input[name=file]').change(function(){
+		var fd=new FormData();
+		fd.append("img",$("input[name=file]").get(0).files[0]);
+		console.log(fd);
+		 $.ajax({
+            type: "POST",
+            url: "/thinkphp/index.php/index/upload",
+            data:fd,
+            /**
+              * 必须false才会避开jQuery对 formdata 的默认处理
+              * XMLHttpRequest会对 formdata 进行正确的处理
+              */
+            processData: false,
+            // 告诉jQuery不要去设置Content-Type请求头
+            contentType: false,
+            dataType: "json",
+            success: function(data){
+                alert(data);
+            }
+        });
+	})
+})
+
+</script>
+</body>
+</html>

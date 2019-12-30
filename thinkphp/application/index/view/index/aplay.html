@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	</head>
+	<style>
+		.total{
+			width: 400px;
+			height: 600px;
+			margin-left: 39.9%;
+			border:1px solid gainsboro;
+			background-color: #F9F9F9;
+			position: relative;
+		}
+		.head{
+			width: 100%;
+			height: 1cm;
+			background-color: white;
+			border:0px dashed;
+			text-align: center;
+			line-height: 1cm;
+		}
+		.content{
+			border:0px dashed;
+			margin-top: 20px;
+			width: 100%;
+			height: 400px;
+			
+		}
+		.order{
+			border:0px dashed;
+			height: 1cm;
+			width: 100%;
+			margin-top: 2px;
+			background-color: white;
+		}
+		.btn{
+			border:0px dashed;
+			height: 1cm;
+			width: 100%;
+			margin-top: 40px;
+			line-height: 1cm;
+			text-align: center;
+		}
+		.div{
+			border: 0px solid;
+			width: 270px;
+			height: 100%;
+			float: left;
+			line-height: 1cm;
+			text-align: left;
+			font-size: 15px;
+		}
+		.right{
+			border: 0px solid;
+			width: 128px;
+			height: 100%;
+			float: right;
+			line-height: 1cm;
+			text-align: right;
+			font-size: 15px;
+		}
+		.amount{
+			text-align: right;
+			line-height: 1cm;
+			font-size: 11px;
+		}
+		.querypay{
+			height: 0.8cm;
+			width: 280px;
+			border: none;
+			border-radius: 3px;
+			background-color: red;
+			color: white;
+		}
+		.mmk{
+	 		width: 400px;
+			height: 178px;
+		    position: absolute;
+		    z-index:99999;  
+		    bottom: 0;
+		    right: 0;
+		    display: none;
+		    text-align: center;
+ 		}
+ 		.mmkt{
+	 		width: 200px;
+			height: 140px;
+		    position: absolute;
+		    z-index:99999;  
+		    bottom: 54%;
+		    right: 45px;
+		    display: none;
+		    text-align: center;
+		    border-radius:3px;
+		    margin-right:  50px;
+		    background-color: gainsboro;
+ 		}
+ 		.mmktt{
+	 		width: 200px;
+			height: 32px;
+			border:0px dashed;
+			text-align: center;
+			line-height: 35px;
+			font-size: 12px;
+			background-color:white ;
+			border-radius:3px 3px 0px 0px ;
+
+ 		}.mmktb{
+	 		width: 200px;
+			height: 105px;
+			margin-top: 2px;
+			border:0px dashed;
+			background-color:white ;
+			border-radius:0px 0px 3px 3px ;
+			
+ 		}
+ 		.jgg{
+ 			width: 133px;
+ 			height: 45px;
+ 			float: left;
+ 			border:none ;
+ 			border: 1px solid gainsboro;
+ 			background-color: white;
+ 			
+ 		}
+ 		.jgg2{
+ 			width: 200px;
+ 			height: 45px;
+ 			float: left;
+ 			border:none ;
+ 			border: 1px solid gainsboro;
+ 			background-color: white;
+ 			
+ 		}
+ 		.lgd{
+ 			width:180px ;
+ 			height: 30px;
+ 			margin-left: 9px;
+ 			margin-top: 16px;
+ 		}
+ 		.lgdk{
+ 			width:28px ;
+ 			height: 28px;
+ 			border: 1px solid gainsboro;
+ 			float: left;
+ 			line-height: 24px;
+ 			
+ 		}
+ 		.dian{
+ 			font-weight: 900;
+ 			font-size: 30px;
+ 			display: none;
+ 		}
+	</style>
+	<body>
+		<div class="total">
+			<div class="head"><label style="float: left;" class="back">返回</label>支付页面</div>
+			<div class="content">
+				<div class="order id">
+					{volist name='aaa' id='val'}
+					<div class="div">
+						&nbsp;订单号:<label style="display:none" class="id1">{$val['id']}</label> <label style="font-size: 10px;color: red;">{$val['order_id']}</label>
+					</div>
+					<div class="right">
+						金额: <label  style="font-size: 15px;color: red;">{$val['amount']}</label>&nbsp;
+					</div>
+					{/volist}
+				</div>
+				<div class="order pay one">
+					<div class="div">
+						&nbsp;微信支付
+					</div>
+					<div class="right">
+						<input type="radio" name="pay" class="wechatpay" checked="checked"/>
+					</div>
+				</div>
+				<div class="order pay two">
+					<div class="div">
+						&nbsp;支付宝支付
+					</div>
+					<div class="right">
+						<input type="radio" name="pay" class="alipay"/>
+					</div>
+				</div>
+				<div class="order pay two">
+					<div class="div">
+						&nbsp;银行卡支付
+					</div>
+					<div class="right">
+						<input type="radio" name="pay" class="carpay"/>
+					</div>
+				</div>
+				{volist name='aaa' id='val'}
+				<div class="order amount" style="font-size: 15px">
+						金额: <label  style="font-size: 15px;color: red;">{$val['amount']}</label>&nbsp;
+				</div>
+				{/volist}
+				<div class="btn">
+					<input type="button" value="确认支付" class="querypay"/>
+				</div>
+			</div>
+			<div class="mmkt">
+				<div class="mmktt">
+					请输入支付密码
+				</div>
+				{volist name='aaa' id='val'}
+				<div class="mmktb">
+					<label style="font-size: 1px;">待付金额</label><br />
+					<label style="font-size: 20px;font-weight: bold;">{$val['amount']}</label>
+				{/volist}
+					<div class="lgd">
+						<div class="lgdk">
+							<label class="dian">●</label>
+						</div>
+						<div class="lgdk">
+							<label class="dian">●</label>
+						</div>
+						<div class="lgdk">
+							<label class="dian">●</label>
+						</div>
+						<div class="lgdk">
+							<label class="dian">●</label>
+						</div>
+						<div class="lgdk">
+							<label class="dian">●</label>
+						</div>
+						<div class="lgdk">
+							<label class="dian">●</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mmk">
+				<input type="button" value="1" class="num jgg" />
+				<input type="button" value="2" class="num jgg" />
+				<input type="button" value="3" class="num jgg" />
+				<input type="button" value="4" class="num jgg" />
+				<input type="button" value="5" class="num jgg" />
+				<input type="button" value="6" class="num jgg" />
+				<input type="button" value="7" class="num jgg" />
+				<input type="button" value="8" class="num jgg" />
+				<input type="button" value="9" class="num jgg" />
+				<input type="button" value="0" class="num jgg2" />
+				<input type="button" value="×" class="numj jgg2" />
+			</div>
+		</div>
+	</body>
+<script>
+	var indexz;
+	var zfmm;
+	$(".querypay").click(function(){
+		$(".bodyyy").attr("style","display: inline;	");
+		$(".mmk").attr("style","display: inline;");
+		$(".mmkt").attr("style","display: inline;	");
+		$(".dian").attr("style","display: none;");
+		indexz = 0;
+		zfmm = '';
+	});
+    
+    $('.back').click(function(event) {
+    	/* Act on the event */
+    	window.location.href='/thinkphp/index.php/index/orderstatus';
+    });
+	$(".num").click(function(){
+		if(indexz<=6){
+			$(".dian").eq(indexz).attr("style","display: inline;");
+			indexz = indexz+1;
+			zfmm = zfmm + $(this).val();
+			
+		}
+		if(indexz==6){
+			$(".bodyyy").attr("style","display: none;	");
+			$(".mmk").attr("style","display: none;");
+			$(".mmkt").attr("style","display: none;	");
+			var id=$('.id1').text();
+			$.ajax({
+				url: '/thinkphp/index.php/index/paypwd',
+				type: 'post',
+				dataType: 'text',
+				data: 'paypwd='+zfmm+'&id='+id,
+				success:function(data){
+					if (data.trim()=='ok') {
+						alert("支付成功,将为您返回首页");
+						window.location.href='/thinkphp/index.php/index/home';
+					}else{
+						alert('密码错误，请重新输入');
+					}
+				}
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+		}
+
+	})
+
+	$(".numj").click(function(){
+		if(indexz>=0){
+			zfmm = zfmm.substr(0,zfmm.length-1);
+			$(".dian").eq(indexz-1).attr("style","display: none;");
+			indexz = indexz-1;
+			
+		}
+		
+	})
+</script>
+</html>

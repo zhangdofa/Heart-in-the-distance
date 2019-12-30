@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>退出登录</title>
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+    <style type="text/css">
+    	.total{
+    		width: 400px;
+	    	height: 600px;
+	    	border: 2px solid #FFFFCC;
+    	}
+    	.img{
+			width: 400px;
+			height: 50px;
+		}
+		.mail{
+			width: 400px;
+			height: 50px;
+		}
+	    .username{
+	    	width: 400px;
+	    	height: 50px;
+	    }
+	    button{
+	    	margin-top: 30px;
+	    }
+    </style>
+</head>
+<body>
+	<center>
+	{volist name='ddd' id="val"}
+	<div class="total">
+     <div class="username">我的昵称：{$val['username']}</div>
+     <div class="mail">我的邮箱：{$val['mail']}</div>
+     <div class="img">我的头像：<img src="/thinkphp/public/img/{$val['img']}" style="width: 100px;height: 50px"><input type="file" name="file" class="file" style="display: none;"><label class="upload">修改头像</label></div>
+	{/volist}
+	 <button onclick="javascript:history.back(-1)">返回</button>
+     <button class="btn">退出登录</button>
+    </div>
+    <script type="text/javascript">
+    	$(".btn").click(function () {
+             var username=$('.user').val();
+             var password=$('.password').val();
+             var checkbox=$('.remember').prop("checked");
+            $.ajax({
+              url: '/thinkphp/index.php/index/info',
+              type: 'post',
+              dataType: 'text',
+              data:'',
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+              	alert(data);
+              	window.location.href="personal.html";
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });  
+    	})
+     $(function(){
+    $(".upload").click(function(){
+    $('input[name=file]').click();                  
+  })
+     $('input[name=file]').change(function(){
+    var fd=new FormData();
+    fd.append("img",$("input[name=file]").get(0).files[0]);
+    console.log(fd);
+     $.ajax({
+            type: "POST",
+            url: "/thinkphp/index.php/index/upload",
+            data:fd,
+            /**
+              * 必须false才会避开jQuery对 formdata 的默认处理
+              * XMLHttpRequest会对 formdata 进行正确的处理
+              */
+            processData: false,
+            // 告诉jQuery不要去设置Content-Type请求头
+            contentType: false,
+            dataType: "json",
+            success: function(data){
+                alert(data);
+            }
+        });
+  })
+})
+
+    </script>
+    </center>
+</body>
+</html>

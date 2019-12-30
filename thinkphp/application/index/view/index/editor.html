@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/distpicker.data.js"></script>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/distpicker.js"></script>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/main.js"></script>
+		<style type="text/css">
+		.total{
+			width: 400px;
+			height: auto;
+			border: 2px solid #FFFFCC;
+		}
+		
+		input{
+			margin-top:  20px;
+		}
+		button{
+			margin-top: 20px;
+		}
+		.username{
+			width: 100px;
+			height: 30px;
+			float: left;
+		}
+		.tell{
+			width: 300px;
+			height: 30px;
+			padding-left: 170px;
+		}
+		.centent{
+			width: 400px;
+			height: 100px;
+			background-color:#F8F8F8;
+			border-bottom: 1px solid #909090;
+			margin-bottom: 20px;
+		}
+		.label1{
+            float: left;
+		}
+		.upadress{
+			width: 400px;
+			height: 600px;
+		}
+		select{
+			margin-top: 20px;
+		}
+		
+	</style>
+</head>
+<body>
+	<center>
+		<div class="total">
+			<div style="margin-bottom: 10px;"><label style="float: left;" onclick="javascript:history.back(-1)" class="back">返回</label>
+				<label style="float: left;display: none;" class="back1">返回</label><label>修改收货地址</label></div>
+            {volist name='aaa' id="val"}
+		<div class="upadress">
+                  <input type="text" class="id" name="" value="{$val['id']}" style="display: none;">
+			<div style="width: 300px">收货人：<input type="text" name=""  class="user" value="{$val['consignee']}"></div>
+			<div style="width: 350px">收货人手机号码：<input type="text" name=""  class="tel" value="{$val['tel']}"></div>
+			<div data-toggle="distpicker">
+             <label>当前省份：{$val['province']} 选择</label><select data-province="---- 选择省 ----" class="select1"></select><br>
+             <label>当前市级：{$val['city']} 选择</label><select data-city="---- 选择市 ----" class="select2"></select><br>
+             <label>当前区县：{$val['county']} 选择</label><select data-district="---- 选择区 ----" class="select3"></select>
+             </div>
+			<!-- <div>省份：<input type="text" name=""></div>
+			<div>市：<input type="text" name=""></div>
+			<div>区县：<input type="text" name=""></div> -->
+			<div style="">地址：<input type="text" name="" class="address" value="{$val['address']}"></div>
+			<div>设为默认地址<input type="radio" name="" class="radio"></div>
+			<button class="btn">确认修改</button>
+		</div>
+            {/volist}
+	</div>
+	</center>
+   <script type="text/javascript">
+       $('.btn').click(function(){
+            var id=$('.id').val();
+            var username=$('.user').val();
+            var tel=$('.tel').val();
+            var address=$('.address').val();
+            if ($('.radio').prop('checked')) {
+                  radio=1;
+            }else{
+                  radio=2;
+            }
+            var province=$(".select1  option:selected").text();
+            var city=$(".select2  option:selected").text();
+            var county=$(".select3  option:selected").text();
+            $.ajax({
+                  url: '/thinkphp/index.php/index/upadress',
+                  type: 'post',
+                  dataType: 'text',
+                  data: 'username='+username+'&tel='+tel+'&province='+province+'&city='+city+'&county='+county+'&address='+address+'&radio='+radio+'&id='+id,
+                  success:function(data){
+                        if (data.trim()=='ok') {
+                              alert('修改成功');
+                              window.location.href='adress.html';
+                        }else{
+                              alert('修改失败');
+                        }
+                  }
+               })
+               .done(function() {
+                  console.log("success");
+               })
+               .fail(function() {
+                  console.log("error");
+               })
+               .always(function() {
+                  console.log("complete");
+               });
+       })
+       $('.radio').click(function(){
+            var id=$('.id').val();
+             if ($('.radio').prop('checked')) {
+                  radio=1;
+            }else{
+                  radio=2;
+            }
+              $.ajax({
+                        url: '/thinkphp/index.php/index/radio',
+                        type: 'post',
+                        dataType: 'text',
+                        data: 'radio='+radio+'&id='+id,
+                        success:function(data){
+                           alert(data);
+                        }
+                  })
+                  .done(function() {
+                        console.log("success");
+                  })
+                  .fail(function() {
+                        console.log("error");
+                  })
+                  .always(function() {
+                        console.log("complete");
+                  });
+       })
+   </script>
+</body>
+</html>

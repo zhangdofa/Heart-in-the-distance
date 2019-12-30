@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<style type="text/css">
+		.bottom{
+            width: 400px;
+            height: 40px;
+            position: fixed;
+            background-color:#FF3300;
+            bottom: 0
+        }
+        ul{
+            list-style-type:none;
+            clear: both;
+            margin:10px;
+            padding: 0;
+            letter-spacing: 5px;
+        }
+        li{
+           display:inline;
+           margin-left: 20px;
+           color: #ffffff;
+        }
+	</style>
+</head>
+<body>
+      <div class="bottom">
+ 	            <ul>
+ 	            	<li class="home">首页</li>
+ 	            	<li style="position: absolute;clear: both" class="car">
+                      <label style="z-index:-1px;">购物车&nbsp;&nbsp;&nbsp;</label>
+                      <label class="number"></label>
+ 	            	</li>
+ 	            	<li style="margin-left: 130px;" class="personal">我的淘宝</li>
+ 	            	<li>更多…</li>
+ 	            </ul>
+  </div>
+  <script type="text/javascript">
+  	$('.car').click(function(){
+             var id=$('.id').text();
+            $.ajax({
+              url: '/thinkphp/index.php/index/buycar',
+              type: 'post',
+              dataType: 'text',
+              data: '',
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+                window.location.href='{:url("buycar")}?id='+ id ;
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });
+        })
+        $('.home').click(function(){
+            window.location.href="home.html";
+        })
+        $('.personal').click(function(){
+            window.location.href="personal.html";
+        })
+  </script>
+</body>
+</html>

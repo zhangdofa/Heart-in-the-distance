@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <script type="text/javascript" src="C:\Users\Administrator\AppData\Roaming\Sublime Text 3\Packages\jquery-3.3.1\jquery-3.3.1.min.js"></script>
+	<style type="text/css">
+		body,div,a,img{padding: 0;margin: 0;font-size: 12px;color: #666;}
+a{text-decoration: none;}
+.clear{clear: both;}
+.buyCar{width: 1000px;height: 450px;margin: 0 auto;}
+.top{width: 1000px;height: 40px;line-height: 40px;background-color: #f3f3f3;border: 1px solid #f1f1f1;}
+.box1{width: 130px;float: left;}
+.box1 input{position: relative;top: 2px;}
+.box2{width: 440px;float: left;}
+.box3{width: 100px;float: left;text-align: center;}
+.box4{width: 100px;float: left;text-align: center;}
+.box5{width: 130px;float: left;text-align: center;}
+.box6{width: 100px;float: left;}
+.top2{width: 1000px;height: 40px;border-bottom: 2px solid #aaa;}
+
+.middle{width: 1000px;border: 1px solid #f1f1f1;}
+.goods{width: 1000px;height: 120px;padding-top: 18px;background-color: #fff4e8;}
+.box11{width: 130px;float: left;}
+.box11 img{width: 80px;height: 80px;vertical-align: top;}
+.box12{width: 210px;float: left;color: #333;}
+.jingzao{color: #fff;background-color: #e2231a;display: inline-block;width: 28px;height: 15px;line-height: 15px;text-align: center;}
+.shengxian{color: #02c555;border: 1px solid #02c555;display: inline-block;width: 28px;height: 15px;line-height: 15px;text-align: center;}
+.box13{width: 230px;float: left;text-indent: 20px;}
+.box14{width: 100px;float: left;text-align: center;color: #333;letter-spacing: 0.5px;}
+.box15{width: 100px;float: left;text-align: center;}
+.box15 .addLow{display: inline-block;width: 16px;height: 22px;border: 1px solid #cacbcb;position: relative;top: -4px;line-height: 22px;cursor: pointer;}
+.box15 .num{display: inline-block;width: 46px;height: 22px;border-top: 1px solid #cacbcb;border-bottom: 1px solid #cacbcb;position: relative;top: -4px;line-height: 22px;}
+.box16{width: 130px;float: left;text-align: center;}
+.box16 div{font-weight: bold;font-size: 13px;color: #000;letter-spacing: 1px;}
+.box17{width: 100px;float: left;}
+.goodsSpace{width: 1000px;height: 40px;border-top: 1px solid #ccc;}
+
+.bottom{width: 1000px;height: 50px;border: 1px solid #f0f0f0;line-height: 50px;margin-top: 20px;}
+.bottom .left{width: 320px;height: 50px;float: left;}
+.bottom .left input{position: relative;top: 2px;}
+.bottom .left a{margin-left: 8px;}
+.bottom .left .clearCar{font-weight: bold;}
+.bottom .right{width: 380px;height: 50px;float: right;}
+.bottom .right .allPrice{width: 260px;height: 40px;margin-top: 5px;float: left;line-height: 16px;}
+.bottom .right .allPrice .str{margin-right: 38px;}
+.bottom .right .allPrice .fontColor1{color: #f00;font-weight: bold;margin: 0 3px;}
+.bottom .right .allPrice .fontColor2{color: #f00;font-weight: bold;font-size: 16px;}
+.bottom .right .balance{width: 96px;height: 50px;background-color: #e64346;color: #fff;font-size: 18px;font-weight: bold;line-height: 50px;text-align: center;float: right;cursor: pointer;}
+	</style>
+</head>
+<body>
+	<!-- 购物车开始 -->
+   <form class="buyCar">
+      <!-- 购物车上部开始 -->
+      <div class="top">
+         <div class="box1">
+            <input type="checkbox" class="allSelect" id="allSelect">
+            <label for="allSelect">全选</label>
+         </div>
+         <div class="box2">商品</div>
+         <div class="box3">单价</div>
+         <div class="box4">数量</div>
+         <div class="box5">小计</div>
+         <div class="box6">操作</div>
+      </div>
+      <div class="clear"></div>
+      <div class="top2"></div>
+      <!-- 购物车上部结束 -->
+      <!-- 购物车中部开始 -->
+      <div class="middle">
+         <div class="goods">
+            <div class="box11">
+               <input type="checkbox" class="check">
+               <a href="#"><img src="img/goods1.png" alt=""></a>
+            </div>
+            <div class="box12">
+               <span class="jingzao">京造</span>
+               <span>京造婴儿儿童理发器 宝宝剃头器 电推剪发器专业防水充电电动理发器 绿</span>
+            </div>
+            <div class="box13">
+               <span>颜色：绿色</span>
+            </div>
+            <div class="box14">
+               <div>&yen;<span>108.00</span></div>
+            </div>
+            <div class="box15">
+               <span class="minus">-</span>
+                    <span class="num">1</span>
+                    <span class="plus">+</span>
+            </div>
+            <div class="box16">
+               <div>&yen;<span class="subPrice" id="subPrice1">108.00</span></div>
+            </div>
+            <div class="box17">
+               <a href="#">删除</a>
+            </div>
+         </div>
+         <div class=" clear"></div>
+         <div class="goodsSpace"></div>
+         <div class="goods">
+            <div class="box11">
+               <input type="checkbox" class="check">
+               <a href="#"><img src="img/goods2.png" alt=""></a>
+            </div>
+            <div class="box12">
+               <span class="shengxian">生鲜</span>
+               <span>海南妃子笑荔枝 1.5kg装 新鲜水果</span>
+            </div>
+            <div class="box13">
+               <span>颜色：海南妃子笑荔枝 1.5k...</span>
+            </div>
+            <div class="box14">
+               <div>&yen;<span id="price2">29.90</span></div>
+            </div>
+            <div class="box15">
+               <span class="minus">-</span>
+               <span class="num" id="num2">1</span>
+               <span class="plus">+</span>
+            </div>
+            <div class="box16">
+               <div>&yen;<span class="subPrice" id="subPrice2">29.90</span></div>
+            </div>
+            <div class="box17">
+               <a href="#">删除</a>
+            </div>
+         </div>
+      </div>
+      <!-- 购物车中部结束 -->
+      <!-- 购物车下部开始 -->
+      <div class="bottom">
+         <div class="left">
+            <input type="checkbox" class="">
+            <label for="allSelect">全选</label>
+            <a href="#">删除选中的商品</a>
+            <a href="#">移到我的关注</a>
+            <a href="#" class="clearCar">清理购物车</a>
+         </div>
+         <div class="right">
+            <div class="allPrice">
+               <div><span class="str">已选择<span class="fontColor1">0</span>件商品</span>总价：<span class="fontColor2">&yen;<span class="allPrice1" id="finalPrice">0.00</span></span></div>
+            </div>
+            <div class="balance">去结算</div>
+         </div>
+      </div>
+      <!-- 购物车下部结束 -->
+   </form>
+   <!-- 购物车结束 -->
+
+
+   <script>
+    $(".plus").on("click",function(){
+        var num=$(this).prev().html();           //获取商品初始数量1
+        $(this).prev().html(Number(num)+1);//此时已将数字直接写入标签内，是动作
+        var buynum=$(this).prev().html();   //得到+1之后的商品数量，即购买数量
+        var price=$(this).parent().prev().children().children().html();     //获取商品单价
+        $(this).parent().next().children().children().html((buynum*Number(price)).toFixed(2));
+//        console.log(smallPrice);
+        allPrice();
+        checkNum();
+    });
+
+    $(".minus").on("click",function(){
+        var num=$(this).next().html();           //获取此时商品数量
+        if(num>1){
+        $(this).next().html(Number(num)-1);//此时已将数字直接写入标签内，是动作
+        var buynum=$(this).next().html();   //得到-1之后的商品数量，即购买数量
+        var price=$(this).parent().prev().children().children().html();     //获取商品单价
+        $(this).parent().next().children().children().html((buynum*Number(price)).toFixed(2));
+        }else{
+            alert("再点就没了");
+        }
+        allPrice();
+        checkNum();
+    });
+    //全选
+    $(".allSelect").click(function(){
+//        console.log(this);
+        if(this.checked==true){
+            $(".check").prop("checked",true);
+        }else{
+            $(".check").prop("checked",false);
+        }
+        allPrice();
+        checkNum();
+    });
+    //单选
+    $(".check").click(function(){
+        var check=$(".check").length;
+        var checked=$(".check:checked").length;
+        if(check==checked){
+            $(".allSelect").prop("checked",true);
+        }else{
+            $(".allSelect").prop("checked",false);
+        }
+        allPrice();
+        checkNum();
+    });
+
+
+    function checkNum(){
+        var num=0;
+        $(".check").each(function(){
+            if(this.checked==true){
+                var b=$($(this).parent().next().next().next().next().children()[1]).html();
+                alert(b);
+                num+=Number(b);
+            }
+        });
+        $(".fontColor1").html(num);
+    }
+
+
+    function allPrice(){
+        var sum=0;
+        $(".check").each(function(){
+            if(this.checked==true){
+               var a=$($(this).parent().next().next().next().next().next().children().children()[0]).html();    //单类商品数量
+//                console.log($($(this).parent().next().next().next().next().next().children().children()[0]).html());
+               sum+=Number(a);
+               alert(sum);
+            }
+        });
+        $(".allPrice1").html(sum);
+    }
+
+</script>
+</body>
+</html>

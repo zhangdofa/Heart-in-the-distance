@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+    <script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/thinkphp/public/buycar/swiper.js"></script>
+    <script type="text/javascript" src="/thinkphp/public/buycar/swiper.css"></script>
+	<style type="text/css">
+	     .total{
+            width: 400px;
+            height: auto;
+            position: absolute;
+            left: 26%;
+            top: 0;
+            border: 1px solid #cccccc;
+        }
+        .content{
+            width: 400px;
+            height: auto;
+        }
+        .head{
+            background-color: #FF6600;
+            width: 400px;
+            position: fixed;
+            top: 0
+        }
+        .one{
+            width: 48%;
+            height: 190px;
+            float: left;
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+        .number{
+            background-color: red;
+            width: 20px;
+            height: 20px;
+            color:white;
+            border-radius:50%;
+            right: 7px;top: 0px;
+            position: absolute;
+            padding-left: 7px;
+            font-size: 5px
+        }
+        .btn{
+            background-color:#ffffff;
+            border: 1px solid red;
+            color: red;
+        }
+        .img{
+            width: 80px;
+            height: 40px;
+        }
+        .fe{
+            width: 80px;
+            height: 65px;
+            display: inline;
+            float: left;
+            margin-left: 15px;
+        }
+        .q{
+            width: 80px;
+        }
+        
+	</style>
+</head>
+<body>
+	<center>
+    <div class="total">
+     <div class="head" style="z-index: 999;">
+     	<div style="height:30px;color: #ffffff;text-align: left;float:left;font-size: 25px;">淘</div>
+     	<div style="width: 320px;height:30px;border: 1px solid red;background-color: #FF3300;color: #ffffff;font-size: 15px;" align="center">寻找店铺宝贝</div>
+     </div>
+     <div class="content">
+        {include file="public/swiper"}
+        <div style="width: 400px;height: 60px;">
+            <div class="fe"><img src="/thinkphp/public/img/feilei.jpg" class="img"><div class="q">分类</div></div>
+            <div class="fe"><img src="/thinkphp/public/img/feilei.jpg" class="img"><div class="q">分类</div></div>
+            <div class="fe"><img src="/thinkphp/public/img/feilei.jpg" class="img"> <div class="q">分类</div></div>
+            <div class="fe"><img src="/thinkphp/public/img/feilei.jpg" class="img"><div class="q">分类</div></div>
+        </div>
+     	 {volist name='aaa' id="val"}
+        <div class="one">
+     		 <img src="/thinkphp/public/img/{$val['picture']}" width="150px" height="70px">
+            <h5 style="color: #282828;">{$val['title']}</h5>
+            <div style="width: px;height: 21px;" class="1">
+            <div style="color: red;float: left;">￥<div style="color: red;float: right;"  class="price">{$val['price']}</div></div>
+            <button class="btn">{$val['button']}</button>
+     	    </div>
+     	</div>
+     	{/volist}
+ </div>
+ {include file="public/footer"}
+ </div>  
+     </center>
+     <script type="text/javascript">
+     	s=0;
+        var page=1;
+        $(document).scroll(function(){
+            //滚动条滑动的时候获取滚动条距离顶部的距离
+            var scroll=$(document).scrollTop();
+            console.log(scroll);
+            //屏幕的高度
+            var client=$(window).height();
+            console.log(client);
+            var h=$(document).height();
+            console.log(h);
+            var flag=true;
+            if (h<=scroll+client) { // 到达底部时,加载新内容
+                if(flag==false){
+                    return;
+                }
+                ajax();
+            }
+            
+        });
+        function ajax(){ 
+            page++;
+            $.ajax({
+                url: '/thinkphp/index.php/index/home_ajax',
+                type: 'post',
+                dataType: 'text',
+                data: 'page='+page,
+                success:function (datas){
+                      $.each(JSON.parse(datas), function(k, v) {
+                    $('.content').append(' <div class="one">'
+            +'<img src="/thinkphp/public/img/'+v.picture+'" width="150px" height="70px">'
+            +'<h5 style="color: #282828;">'+v.title+'</h5>'
+            +'<div style="width: px;height: 21px;" class="1">'
+            +'<div style="color: red;float: left;">￥<div style="color: red;float: right;" '
+            +'class="price">'+v.price+'</div></div>'
+            +'<button class="btn btn1">'+v.button+'</button></div></div>');
+                })
+                }
+            })
+            .done(function() {
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+        }
+        $('.btn').click(function(event) {
+            /* Act on the event */
+                s++;
+            $('.number').html(s);
+            $img=$('img').prop('src');
+            $title=$('h5').html();
+            $price=$('.price').html();
+            $.ajax({
+              url: '/thinkphp/index.php/index/addcar',
+              type: 'post',
+              dataType: 'text',
+              data: 'img='+$img+'&title='+$title+'&price='+$price,
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+                if (data=='no') {
+                   alert(data);
+                   window.location.href='login.html';
+                }
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });
+        });
+        $(".content").delegate(".btn1", "click", function(){
+                s++;
+            $('.number').html(s);
+            $img=$('img').prop('src');
+            $title=$('h5').html();
+            $price=$('.price').html();
+            $.ajax({
+              url: '/thinkphp/index.php/index/addcar',
+              type: 'post',
+              dataType: 'text',
+              data: 'img='+$img+'&title='+$title+'&price='+$price,
+              success: function(data){  //回调函数，data为形参，是php页面返回的值
+                if (data=='no') {
+                   alert(data);
+                   window.location.href='login.html';
+                }
+             }
+             })
+             .done(function() {
+              console.log("success");
+             })
+             .fail(function() {
+              console.log("error");
+             })
+             .always(function() {
+              console.log("complete");
+             });
+         })
+        $('.fe').click(function(){
+            window.location.href="classify.html";
+        })
+       
+     </script>
+</body>
+</html>

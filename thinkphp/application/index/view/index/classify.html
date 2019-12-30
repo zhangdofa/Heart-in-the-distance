@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>分类</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<style type="text/css">
+		.total{
+			width: 400px;
+			height: 501px;
+			background-color: 	#FFE4C4;
+			border: 2px solid #FFE4C4;
+		}
+		.left{
+			width: 95px;
+			height: 500px;
+			border: 1px solid #ffffff;
+			background-color: #ffffff;
+			float: left;
+			margin-left: 3px;
+		}
+		.right{
+			width: 290px;
+			height: 500px;
+			float: right;
+			margin-right: 3px;
+			border: 1px solid #ffffff;
+			background-color: #ffffff;
+
+		}
+		.one{
+            width: 48%;
+            height: 140px;
+            float: left;
+            margin-bottom: 40px;
+        }
+		ul{
+            list-style-type:none;
+            margin:0;
+            padding:0;
+            clear: both;
+            letter-spacing: 5px;
+        }
+        li{
+        	margin-bottom: 20px;
+        }
+        .back{
+            margin-bottom: 20px;
+        }
+	</style>
+</head>
+<body>
+	<center>
+     <div class="total">
+     	<div class="left">
+            <div class="back" onclick="javascript:history.back(-1)">返回</div>
+     		<ul>
+              {volist name="fff"  id="val"} 
+     			<li>{$val['name']}</li>
+     	       {/volist}
+     		</ul>
+     	</div>
+        <div>
+        {volist name='fff' id='val'}
+     	<div class="right">
+            {volist name="val['son']"  id="v"}
+            <div class="one">
+                <img src="{$val['img']}" width="150px" height="80px">
+                <h5 style="color: #282828;">{$v['name']}</h5>
+            </div>
+             {/volist}
+     	</div>
+        {/volist}
+        </div>
+     </div>
+     </center>
+     <script type="text/javascript">
+        $(".right").hide();
+        $(".right").eq(0).show();
+
+     	$('li').click(function () {
+     		// body...
+     		var index=$(this).index();
+            $(this).siblings().css('color','');
+            $(this).css('color','red');
+     		$(".right").hide();
+            $(".right").eq(index).show();
+     		
+            /*$('li').each(function(index, el) {
+            	var index=$('li').index(this);
+            	alert(index);
+            });*/
+     	})
+        $('.one').click(function(){
+             window.location.href="page.html";
+        })
+     </script>
+</body>
+</html>

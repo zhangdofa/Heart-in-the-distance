@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<style type="text/css">
+	     .total{
+            width: 400px;
+            height: auto;
+            border: 2px solid red; 
+            position: absolute;
+            left: 33%
+        }
+        .content{
+            width: 400px;
+            height: auto;
+        }
+        .head{
+            background-color: #FF6600;
+        }
+        .one{
+            width: 48%;
+            height: 190px;
+            float: left;
+            margin-bottom: 25px;
+        }
+        .bottom{
+            width: 400px;
+            height: 40px;
+            border: 1px solid red;
+            position: absolute;
+            bottom: 0
+        }
+        .number{
+            background-color: red;
+            width: 20px;
+            height: 20px;
+            color:white;
+            border-radius:50%;
+            right: 7px;top: 0px;
+            position: absolute;
+            padding-left: 7px;
+            font-size: 5px
+        }
+        ul{
+            list-style-type:none;
+            clear: both;
+            margin:10px;
+            padding: 0;
+            letter-spacing: 5px;
+        }
+        li{
+           display:inline;
+           margin-left: 20px;
+           background-color:#E0E0E0;
+        }
+        .btn{
+            background-color:#ffffff;
+            border: 1px solid red;
+            color: red;
+        }
+	</style>
+</head>
+<body>
+	<center>
+    <div class="total">
+     <div class="content">
+     	<div><label onclick="javascript:history.back(-1)" style="float: left;">返回</label><label>排序方式：</label>
+     		<label>价格
+     				<select>
+     					<option>从高到低</option>
+     					<option>从低到高</option>
+     				</select>
+     				<button>确认</button>
+     		</label></div>
+     	<div class="content1">
+     	{volist name='aaa' id="val"}
+        <div class="one">
+     		 <img src="/thinkphp/public/img/{$val['picture']}" width="150px" height="70px">
+            <h5 style="color: #282828;">{$val['title']}</h5>
+            <div style="width: px;height: 21px;" class="1">
+            <div style="color: red;float: left;">￥<div style="color: red;float: right;"  class="price">{$val['price']}</div></div>
+            <button class="btn">{$val['button']}</button>
+     	    </div>
+     	</div>
+     	{/volist}
+     	</div>
+     	{$aaa->render()}
+ </div>
+ </div>  
+     </center>
+     <script type="text/javascript">
+     	$('button').click(function(){
+     		str='';
+     		var page =$('select option:selected').text();
+     		if (page=="从高到低") {
+     		    page=1;
+     		}else{
+     			page=2;
+     		}
+            $.ajax({
+                       	url: '/thinkphp/index.php/index/page',
+                       	type: 'post',
+                       	dataType: 'text',
+                       	data: 'page='+page,
+                       	success:function(data){
+                       		alert(data);
+                       		var obj=eval('('+data+')');//json: 返回的json串
+                       		$.each(obj.data,function(k,v){
+                       			str+='<div class="one">'
+     		 +'<img src="/thinkphp/public/img/'+v.picture+'" width="150px" height="70px">'
+            +'<h5 style="color: #282828;">'+v.title+'</h5>'
+           +'<div style="width: px;height: 21px;" class="1">'
+            +'<div style="color: red;float: left;">￥<div style="color: red;float: right;"  class="price">'+v.price+'</div></div>'
+            +'<button class="btn">'+v.button+'</button>'
+     	    +'</div></div>'
+                       		})
+                       		$('.content1').html(str);
+                       	}
+                       })
+                       .done(function() {
+                       	console.log("success");
+                       })
+                       .fail(function() {
+                       	console.log("error");
+                       })
+                       .always(function() {
+                       	console.log("complete");
+                       });
+                                  
+     	})
+     </script>
+</body>
+</html>

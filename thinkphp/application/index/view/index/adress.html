@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/distpicker.data.js"></script>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/distpicker.js"></script>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/main.js"></script>
+		<style type="text/css">
+		.total{
+			width: 400px;
+			height: auto;
+			border: 2px solid #FFFFCC;
+                  background-color: #F9F9F9;
+		}
+		
+		input{
+			margin-top:  20px;
+		}
+		button{
+			margin-top: 20px;
+		}
+		.username{
+			width: 100px;
+			height: 30px;
+			float: left;
+		}
+		.tell{
+			width: 300px;
+			height: 30px;
+			padding-left: 170px;
+		}
+		.centent{
+			width: 400px;
+			height: 100px;
+			background-color:white;
+			margin-bottom: 20px;
+		}
+		.label1{
+            float: left;
+		}
+		.upadress{
+			width: 400px;
+			height: 600px;
+			display: none;
+		}
+		select{
+			margin-top: 20px;
+		}
+		
+	</style>
+</head>
+<body>
+	<center>
+		<div class="total">
+			<div style="margin-bottom: 20px;background-color: white;padding-top: 10px;"><label style="float: left;" onclick="javascript:history.back(-1)" class="back">返回</label>
+				<label style="float: left;display: none;" class="back1">返回</label><label style="font-weight: 600">我的收货地址</label></div>
+			{volist name='aaa' id='val'}
+		<div class="centent">
+		<div style="width: 400px;height: 30px;">
+			<label class="id" style="display: none;">{$val['id']}</label>
+		<label class="username">{$val['consignee']}</label><label class="tell">{$val['tel']}</label>
+		</div>
+		<div style="margin-top: 15px">{$val['province']} {$val['city']} {$val['county']} {$val['address']}</div>
+		<div style="margin-top: 10px;border-top: 1px  dashed  #909090">
+		<div style="position: relative;">
+		<input type="radio" name="" class="radio1" style="float: left;position: relative;bottom: 15px" attr='1'><label class="label1">设为默认</label>
+	    </div>
+		<div style="float: right;">
+		<label class="label2">编辑</label>
+		<label class="label3">删除</label>
+		</div>
+		</div>
+		</div>
+		{/volist}
+		<div class="upadress">
+			<div style="width: 300px">收货人：<input type="text" name=""  class="user"></div>
+			<div style="width: 350px">收货人手机号码：<input type="text" name=""  class="tel"></div>
+			<div data-toggle="distpicker">
+             <label>省份：</label><select data-province="---- 选择省 ----" class="select1"></select><br>
+             <label>市级：</label><select data-city="---- 选择市 ----" class="select2"></select><br>
+             <label>区县：</label><select data-district="---- 选择区 ----" class="select3"></select>
+             </div>
+			<!-- <div>省份：<input type="text" name=""></div>
+			<div>市：<input type="text" name=""></div>
+			<div>区县：<input type="text" name=""></div> -->
+			<div style="">地址：<input type="text" name="" class="address"></div>
+			<div>设为默认地址<input type="radio" name="" class="radio"></div>
+			<button class="btn">确认添加</button>
+		</div>
+		<div style="margin-top: 200px;background-color:#FF0000;width: 400px;height: 50px;color: #ffffff;font-weight: 400;position: relative;" class="bottom"><label style="position: absolute;top: 15px;left: 160px" class="addadress">新增收货地址</label></div>
+	</div>
+	</center>
+   <script type="text/javascript">
+       $('.addadress').click(function(){
+           $('.centent').hide();
+           $('.upadress').show();
+           $('.bottom').hide();
+           $('.back').hide();
+           $('.back1').show();
+       })
+       $('.back1').click(function(event) {
+       	/* Act on the event */
+       	   $('.centent').show();
+       	   $('.back').show();
+       	   $('.back1').hide();
+       	   $('.upadress').hide();
+       	   $('.bottom').show();
+       });
+       $('.label3').click(function(){
+       	   var id=$(this).parent().parent().parent().find('label[class=id]').text();
+       	   $.ajax({
+       	   	url: '/thinkphp/index.php/index/delete',
+       	   	type: 'post',
+       	   	dataType: 'text',
+       	   	data: 'id='+id,
+       	   	success:function(data){
+       	   		if (data.trim()=='ok') {
+       	   			alert('删除成功');
+       	   			window.location.href='adress.html';
+       	   		}else{
+       	   			alert('删除失败');
+       	   		}
+       	   	}
+       	   })
+       	   .done(function() {
+       	   	console.log("success");
+       	   })
+       	   .fail(function() {
+       	   	console.log("error");
+       	   })
+       	   .always(function() {
+       	   	console.log("complete");
+       	   });
+       	   
+       })
+       $('.btn').click(function(){
+       	var username=$('.user').val();
+       	var tel=$('.tel').val();
+       	var address=$('.address').val();
+       	if ($('.radio').prop('checked')) {
+       		radio=1;
+       	}else{
+       		radio=2;
+       	}
+       	var province=$(".select1  option:selected").text();
+       	var city=$(".select2  option:selected").text();
+       	var county=$(".select3  option:selected").text();
+       	   $.ajax({
+       	   	url: '/thinkphp/index.php/index/addadress',
+       	   	type: 'post',
+       	   	dataType: 'text',
+       	   	data: 'username='+username+'&tel='+tel+'&province='+province+'&city='+city+'&county='+county+'&address='+address+'&radio='+radio,
+       	   	success:function(data){
+       	   		if (data.trim()=='ok') {
+       	   			alert('添加成功,将自动为您返回');
+       	   			window.location.href='adress.html';
+       	   		}else{
+       	   			alert('添加失败');
+       	   		}
+       	   	}
+       	   })
+       	   .done(function() {
+       	   	console.log("success");
+       	   })
+       	   .fail(function() {
+       	   	console.log("error");
+       	   })
+       	   .always(function() {
+       	   	console.log("complete");
+       	   });
+       })
+       $('.label2').click(function(){
+       	   var id=$(this).parent().parent().parent().find('label[class=id]').text();
+       	   window.location.href='editor.html?id='+id;
+       })
+       $('.radio1').click(function(){
+       	   var id=$(this).parent().parent().parent().find('label[class=id]').text();
+               $(this).parent().parent().parent().parent().find('input[class=radio1]').prop('checked',false);
+               $(this).prop('checked',true);
+             $.ajax({
+                  url: '/thinkphp/index.php/index/radio',
+                  type: 'post',
+                  dataType: 'text',
+                  data: 'id='+id,
+                  success:function(data){
+                        
+                  }
+               })
+               .done(function() {
+                  console.log("success");
+               })
+               .fail(function() {
+                  console.log("error");
+               })
+               .always(function() {
+                  console.log("complete");
+               });
+           })
+   </script>
+</body>
+</html>

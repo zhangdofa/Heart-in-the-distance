@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+    <script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<style type="text/css">
+		.total{
+			width: 400px;
+			height: 600px;
+			border: 2px solid #FFFFCC;
+         background-color: #F9F9F9;
+         position: relative;
+		}
+		div{
+			margin-bottom: 10px;
+         
+		}
+      .myadress{
+         height: 40px;
+         background-color: white;
+         position: relative;
+         padding-top:20px;
+      }
+      .set{
+         height: 40px;
+         background-color: white;
+         position: relative;
+         padding-top:20px;
+      }
+      .setpwd{
+         height: 40px;
+         background-color: white;
+         position: relative;
+         padding-top:20px;
+      }
+      .updatepwd{
+         height: 40px;
+         background-color: white;
+         position: relative;
+         padding-top:20px;
+      }
+      .update{
+         height: 40px;
+         background-color: white;
+         position: relative;
+         padding-top:20px;
+      }
+	</style>
+</head>
+<body>
+      <center>
+      	<div class="total">
+         <div class="set"><label onclick="window.location.href='personal.html'" style="float: left;" class="back">返回</label><label class="set" style="margin-right: 40px;font-weight: 600;font-size: 17px;">设置</label></div>
+      	<div class="myadress">我的收货地址：</div>
+      	<div class="update">修改登录密码：<input type="" name="" placeholder="请输入您的邮箱" style="display: none;" class="update1">&nbsp;<button class="btn1" style="display: none;">确认</button></div>
+      	<div class="setpwd">设置支付密码：<input type="" name="" placeholder="请输入您的邮箱" style="display: none;" class="update2">&nbsp;<button class="btn2" style="display: none;">确认</button></div>
+      	<div class="updatepwd">修改支付密码：<input type="" name="" placeholder="请输入您的邮箱" style="display: none;" class="update3">&nbsp;<button class="btn3" style="display: none;">确认</button></div>
+      	</div>
+      </center>
+      <script type="text/javascript">
+         $('.update').click(function () {
+            // body...
+            $('.update1').show();
+            $('.btn1').show();
+            $('.setpwd').hide();
+            $('.updatepwd').hide();
+            $('.myadress').hide();
+            $('.back').html('<label style="float: left;" class="back1">返回</label>');
+         })
+         $('.setpwd').click(function () {
+            // body...
+            $('.update2').show();
+            $('.btn2').show();
+            $('.update').hide();
+            $('.updatepwd').hide();
+            $('.myadress').hide();
+            $('.back').html('<label style="float: left;" class="back1">返回</label>');
+         })
+          $('.updatepwd').click(function () {
+            // body...
+            $('.update3').show();
+            $('.btn3').show();
+            $('.setpwd').hide();
+            $('.update').hide();
+            $('.myadress').hide();
+            $('.back').html('<label style="float: left;" class="back1">返回</label>');
+         })
+          $('.set').delegate('.back1','click',function(){
+            window.location.href='setting.html';
+          })
+      	$('.btn1').click(function(){
+      		var mail=$(this).prev().val();
+      		 $.ajax({
+   			url: '/thinkphp/index.php/index/setting_ajax',
+   			type: 'post',
+   			dataType: 'text',
+   			data: 'mail='+mail,
+   			success:function(data){
+   				if (data.trim()=='ok') {
+   					window.location.href='update.html';
+   				}else{
+   					alert('你输入的邮箱有误');
+   				}
+   			}
+   		})
+   		.done(function() {
+   			console.log("success");
+   		})
+   		.fail(function() {
+   			console.log("error");
+   		})
+   		.always(function() {
+   			console.log("complete");
+   		});
+      		
+      	})
+      	$('.btn2').click(function(){
+      		var mail=$(this).prev().val();
+      		 $.ajax({
+   			url: '/thinkphp/index.php/index/setting_ajax',
+   			type: 'post',
+   			dataType: 'text',
+   			data: 'mail='+mail,
+   			success:function(data){
+   				if (data.trim()=='ok') {
+   					window.location.href='update1.html';
+   				}else{
+   					alert('你输入的邮箱有误');
+   				}
+   			}
+   		})
+   		.done(function() {
+   			console.log("success");
+   		})
+   		.fail(function() {
+   			console.log("error");
+   		})
+   		.always(function() {
+   			console.log("complete");
+   		});
+      	})
+         $('.btn3').click(function(){
+            var mail=$(this).prev().val();
+             $.ajax({
+            url: '/thinkphp/index.php/index/setting_ajax',
+            type: 'post',
+            dataType: 'text',
+            data: 'mail='+mail,
+            success:function(data){
+               if (data.trim()=='ok') {
+                  window.location.href='update2.html';
+               }else{
+                  alert('你输入的邮箱有误');
+               }
+            }
+         })
+         .done(function() {
+            console.log("success");
+         })
+         .fail(function() {
+            console.log("error");
+         })
+         .always(function() {
+            console.log("complete");
+         });
+         })
+      	$('.myadress').click(function(){
+          window.location.href='adress.html'
+      	})
+      </script>
+</body>
+</html>

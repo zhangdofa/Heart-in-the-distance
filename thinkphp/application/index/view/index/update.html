@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	    <script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+		<style type="text/css">
+		.total{
+			width: 400px;
+			height: 600px;
+			border: 2px solid #FFFFCC;
+		}
+		div{
+			padding-top: 20px;
+		}
+		input{
+			margin-top:  20px;
+		}
+		button{
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<div class="total">
+		<div>请输入您要修改的登录密码:</div>
+		<input type="password" name="" placeholder="请输入密码" class="pwd1"><br>
+		<input type="password" name="" placeholder="请再次输入密码" class="pwd2"><br>
+		<button class="btn1">确认</button><button onclick="window.location.href='setting.html'">返回</button>
+	</div>
+	</center>
+   <script type="text/javascript">
+   	$('.btn1').click(function(){
+   		var pwd1=$('.pwd1').val();
+   		var pwd2=$('.pwd2').val();
+   		if (!pwd1=='') {
+           if (pwd1==pwd2) {
+           $.ajax({
+   			url: '/thinkphp/index.php/index/update_ajax',
+   			type: 'post',
+   			dataType: 'text',
+   			data: 'pwd='+pwd1,
+   			success:function(data){
+   				if(data.trim()=='ok') {
+                  alert("修改成功,请重新登录！");
+                  window.location.href='login.html';
+               }else{
+                  alert('设置失败，请重新设置');
+               }
+   			}
+   		})
+   		.done(function() {
+   			console.log("success");
+   		})
+   		.fail(function() {
+   			console.log("error");
+   		})
+   		.always(function() {
+   			console.log("complete");
+   		});
+   		}else{
+   			alert('您输入的两次密码不一致！请重新输入');
+   		}
+   		}else{
+   			alert('密码为空，请重新输入');
+   		}
+   		
+   	})
+   </script>
+</body>
+</html>

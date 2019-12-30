@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/thinkphp/public/buycar/swiper.css"/>
+    <script type="text/javascript" src="/thinkphp/public/buycar/swiper.js"></script>
+    <style type="text/css">
+    	.swiper-container {
+           width: 400px;
+           height: 150px;
+           margin-top: 32px;
+         }  
+    </style>
+</head>
+<body>
+    <div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="/thinkphp/public/img/ddd.jpg" width="400px" height="140px"></div>
+        <div class="swiper-slide"><img src="/thinkphp/public/img/ddd1.jpg" width="400px" height="140px"></div>
+        <div class="swiper-slide"><img src="/thinkphp/public/img/ddd2.jpg" width="400px" height="140px"></div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+    
+    <!-- 如果需要导航按钮 -->
+    <!-- <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div> -->
+    
+    <!-- 如果需要滚动条 -->
+    <!-- <div class="swiper-scrollbar"></div> -->
+</div>
+    <script>        
+    var mySwiper = new Swiper ('.swiper-container', {
+    direction: 'horizontal', // 垂直切换选项
+    loop: true, // 循环模式选项
+    autoplay: true,//可选选项，自动滑动
+    speed:300,  //翻页速度
+    autoplay : {
+    delay:3000  
+    },
+    
+    // 如果需要分页器
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    
+    // 如果需要前进后退按钮
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    
+    // 如果需要滚动条
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+    })        
+    </script>
+</body>
+</html>

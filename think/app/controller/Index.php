@@ -14,9 +14,8 @@ class Index extends BaseController
     {
         return 'hello,' . $name;
     }
-//	public function a()
-//  {
-////      $data = ['name'=>'thinkphp','url'=>'thinkphp.cn'];
-//      return $this<-fe
-//  }
+	public function test()
+	{
+		echo "hello world";
+	}
 }

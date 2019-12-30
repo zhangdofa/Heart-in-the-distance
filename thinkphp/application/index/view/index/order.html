@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="/thinkphp/public/buycar/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="/thinkphp/public/buycar/distpicker.data.js"></script>
+	<script type="text/javascript" src="/thinkphp/public/buycar/distpicker.js"></script>
+    <script type="text/javascript" src="/thinkphp/public/buycar/main.js"></script>
+	<style type="text/css">
+		.total{
+			width: 400px;
+			height: auto;
+			border: 2px solid red;
+			position: relative;
+		}
+		.one{
+			width: 400px;
+			height: auto;
+			border: 2px solid red;
+		}
+		.centent{
+			width: 400px;
+			height: 300px;
+		}
+        .bottom{
+        	width: 400px;
+        	height: 50px;
+        	padding-top: 30px;
+        	margin-top: 100px;
+        	position: relative;
+        }
+        .head{
+        	width: 400px;
+        	height: 50px;
+        	font-weight: 600;
+        }
+        .public{
+			clear: both;
+			width: 380px;
+			height: 100px;
+			margin-top: 50px;
+			background-color: #F0F0F0
+		}
+		.upadress{
+			width: 400px;
+			height: 600px;
+		}
+	</style>
+</head>
+<body>
+      <center>
+      	<form action="/thinkphp/index.php/index/order_ajax" method="post">
+      	<div class="total one">
+      		<label class="back1" style="float: left;" onclick="javascript:history.back(-1)">返回</label>
+      		<div class="head">确认信息</div>
+      		
+      		<div class="address"></div>
+      		<div class="centent">
+      			{volist name='aaa' id="val"}
+      		 <div class="public">
+             <input name="id[]" style="display: none;" value="{$val['id']}">
+             <input name="img[]" style="display: none;" value="{$val['img']}">
+             <input name="title[]" style="display: none;" value="{$val['title']}">
+             <input name="price[]" style="display: none;" value="{$val['price']}">
+             <input name="num[]" style="display: none;" value="{$val['num']}">
+             <div style="float: left;width: 50px;height: 100px;position: absolute;">
+             </div>
+             <img src="{$val['img']}" style="width: 150px;height: 100px;float: left;">
+             <h5 style="color: #282828;">{$val['title']}</h5>
+             <div style="width: px;height: 21px;" class="ee">
+             <div style="color: red;float: left;">￥<div style="color: red;float: right;"   class="price">{$val['price']}</div></div>
+             <div class="stepper" style="float: right;color: red"><label class="num">{$val['num']}</label>件</div>
+          </div>
+      </div>
+      {/volist}
+      		</div>
+      		<div class="bottom"><div style="width: 400px;position: relative;top: 20px"><label style="margin-left: 150px;">合计总金额：</label><label class="sum" style="color: red"></label><input style="float: right;font-size:large;background-color: #FF0033;color: #ffffff;" type="submit" value="提交"></div></div>
+      	</div>
+      	
+      	<div class="total two" style="display: none;">
+			<div style="margin-bottom: 10px;"><label style="float: left;"  class="back2">返回</label>
+				<label style="float: left;display: none;" class="back">返回</label><label>选择我的收货地址</label></div>
+		<div class="centent1">
+		      
+		</div>
+		<div style="margin-top: 242px;background-color:#FF0000;width: 400px;height: 50px;color: #ffffff;font-weight: 400;position: relative;" class="bottom four"><label style="position: absolute;top: 15px;left: 160px" class="addadress">新增收货地址</label></div>
+		</div>
+		<div class="total three" style="display: none;">
+			<div style="margin-bottom: 10px;"><label style="float: left;"  class="back3">返回</label>
+				<label style="float: left;display: none;" class="back1">返回</label><label>我的收货地址</label></div>
+		<div class="upadress">
+			<div style="width: 300px">收货人：<input type="text" name=""  class="user"></div>
+			<div style="width: 350px">收货人手机号码：<input type="text" name=""  class="tel"></div>
+			<div data-toggle="distpicker">
+             <label>省份：</label><select data-province="---- 选择省 ----" class="select1"></select><br>
+             <label>市级：</label><select data-city="---- 选择市 ----" class="select2"></select><br>
+             <label>区县：</label><select data-district="---- 选择区 ----" class="select3"></select>
+             </div>
+			<!-- <div>省份：<input type="text" name=""></div>
+			<div>市：<input type="text" name=""></div>
+			<div>区县：<input type="text" name=""></div> -->
+			<div style="width: 300px">地址：<input type="text" name="" class="address1"></div>
+			<div>设为默认地址<input type="radio" name="" class="radio"></div>
+			<button class="btn">确认添加</button>
+		</div>
+		
+		</div>
+		</form>
+      </center>
+      <script type="text/javascript">
+      	$(document).ready(function(){
+      		str='';
+            $.ajax({
+            	url: '/thinkphp/index.php/index/show_address',
+            	type: 'post',
+            	dataType: 'text',
+            	data: '',
+            	success:function(datas){
+                     $.each(JSON.parse(datas), function(idx, obj) {
+                        str+='<input name="consignee[]" value="'+obj.consignee+'" style="display:none">'
+                        +'<input name="tel[]" value="'+obj.tel+'" style="display:none">'
+                        +'<input name="address[]" value="'+obj.province+ obj.city +obj.county +obj.address+'" style="display:none">'
+                        +'<div style="background-color:#FFD2D2" class="address">'
+                        +'<div style="width: 400px;height: 30px;">'
+		+'<label style="float:left">收货人：</label><label class="username" style="float:left">'+obj.consignee+'</label>'
+		+'<label class="tell">'+obj.tel+'</label></div>'
+		+'<div style="float:left;width:400px;background-color:#FFD2D2" class="address1">'
+		+obj.province+ obj.city +obj.county +obj.address+'</div>'
+		+'</div>';
+                   });
+                     $('.address').html(str);
+            	}
+            })
+            .done(function() {
+            	console.log("success");
+            })
+            .fail(function() {
+            	console.log("error");
+            })
+            .always(function() {
+            	console.log("complete");
+            });
+            
+      	})
+      	$(document).ready(function(){
+      		var s=0;
+      		str='';
+            $('.public').each(function(){
+                var num=$(this).find('label[class*=num]').text();
+              var price=$(this).find('div[class*=price]').text();
+              s+=num*price;
+   	 	      		})
+            str+='<input name="sum[]" style="display:none" value="'+'￥'+s.toFixed(2)+'">'
+             $(".sum").html(str+'￥'+s.toFixed(2));
+      	})
+      /*	$('.address').click(function(){
+            window.location.href='adress.html';
+      	})*/
+      	$('.address').click(function(){
+      		$('.one').hide();
+      		$('.two').show();
+      		str='';
+            $.ajax({
+            	url: '/thinkphp/index.php/index/show_address1',
+            	type: 'post',
+            	dataType: 'text',
+            	data: '',
+            	success:function(datas){
+                     $.each(JSON.parse(datas), function(idx, obj) {
+                        str+='<div style="margin-top:20px" class="adr"><div style="width: 400px;height: 30px;" class="a">'
+			+'<label class="id" style="display: none;">'+obj.id+'</label>'
+		+'<label class="username" style="float:left">'+obj.consignee+'</label>'
+		+'<label class="tell" style="float:right">'+obj.tel+'</label></div>'
+		+'<div style="margin-top: 15px">'+obj.province+obj.city+obj.county+obj.address+'</div></div>';
+                   });
+                     $('.centent1').html(str);
+            	}
+            })
+            .done(function() {
+            	console.log("success");
+            })
+            .fail(function() {
+            	console.log("error");
+            })
+            .always(function() {
+            	console.log("complete");
+            });
+      	})
+      	$(".centent1").delegate(".adr", "click", function(){
+        // 这里的this指向触发点击事件的p元素(Element)
+           var id=$(this).find('label[class=id]').text();
+          $('.two').hide();
+          $('.three').hide();
+          $('.one').show();
+          str='';
+          $.ajax({
+            	url: '/thinkphp/index.php/index/show_address2',
+            	type: 'post',
+            	dataType: 'text',
+            	data: 'id='+id,
+            	success:function(datas){
+                     $.each(JSON.parse(datas), function(idx, obj) {
+                        str+='<input name="consignee[]" value="'+obj.consignee+'" style="display:none">'
+                        +'<input name="tel[]" value="'+obj.tel+'" style="display:none">'
+                        +'<input name="address[]" value="'+obj.province+ obj.city +obj.county +obj.address+'" style="display:none">'
+                       +'<div style="background-color:#FFD2D2" class="address">'
+                        +'<div style="width: 400px;height: 30px;">'
+		+'<label style="float:left">收货人：</label><label class="username" style="float:left">'+obj.consignee+'</label>'
+		+'<label class="tell">'+obj.tel+'</label></div>'
+		+'<div style="float:left;width:400px;background-color:#FFD2D2" class="address1">'
+		+obj.province+ obj.city +obj.county +obj.address+'</div>'
+		+'</div>';
+                   });
+                     $('.address').html(str);
+            	}
+            })
+            .done(function() {
+            	console.log("success");
+            })
+            .fail(function() {
+            	console.log("error");
+            })
+            .always(function() {
+            	console.log("complete");
+            });
+
+});
+      	$('.four').click(function(event) {
+      		/* Act on the event */
+      		$('.one').hide();
+      		$('.two').hide();
+      		$('.three').show();
+      	});
+      	$('.btn').click(function(){
+       	var username=$('.user').val();
+       	var tel=$('.tel').val();
+       	var address=$('.address').val();
+       	if ($('.radio').prop('checked')) {
+       		radio=1;
+       	}else{
+       		radio=2;
+       	}
+       	var province=$(".select1  option:selected").text();
+       	var city=$(".select2  option:selected").text();
+       	var county=$(".select3  option:selected").text();
+       	   $.ajax({
+       	   	url: '/thinkphp/index.php/index/addadress',
+       	   	type: 'post',
+       	   	dataType: 'text',
+       	   	data: 'username='+username+'&tel='+tel+'&province='+province+'&city='+city+'&county='+county+'&address='+address+'&radio='+radio,
+       	   	success:function(data){
+       	   		if (data.trim()=='ok') {
+       	   			alert('添加成功,将自动为您返回');
+       	   			$('.three').hide();
+       	   			$('.two').hide();
+       	   			$('.one').show();
+       	   		}else{
+       	   			alert('添加失败');
+       	   		}
+       	   	}
+       	   })
+       	   .done(function() {
+       	   	console.log("success");
+       	   })
+       	   .fail(function() {
+       	   	console.log("error");
+       	   })
+       	   .always(function() {
+       	   	console.log("complete");
+       	   });
+       })
+      	$('.back2').click(function(event) {
+      		/* Act on the event */
+      		$('.two').hide();
+      		$('.one').show();
+      	});
+      	$('.back3').click(function(event) {
+      		/* Act on the event */
+      		$('.three').hide();
+      		$('.two').show();
+      	});
+      	// $('.submit').click(function(event) {
+      	// 	/* Act on the event */
+      	// 	titles='';
+      	// 	$('h5').each(function(index, el) {
+      	// 		var title=$(this).parent().parent().parent().find('h5').text();
+      	// 		titles+=title;
+      	// 	});
+      	// 	alert(title);
+      	// 	var img=$(this).parent().parent().parent().find('img').prop('src');
+      	// 	var title=$(this).parent().parent().parent().find('h5').text();
+      	// 	var price=$(this).parent().parent().parent().find('div[class=price]').text();
+      	// 	var num=$(this).parent().parent().parent().find('label[class=num]').text();
+      	// 	alert(img+title+price+num);
+      	// 	var address=$(this).parent().parent().parent().find('div[class=address1]').text();
+      	// 	var username=$(this).parent().parent().parent().find('label[class=username]').text();
+      	// 	var tell=$(this).parent().parent().parent().find('label[class=tell]').text();
+      	// 	var amount=$(this).prev().text();
+      	// 	$.ajax({
+      	// 		url: '/thinkphp/index.php/index/order_ajax',
+      	// 		type: 'post',
+      	// 		dataType: 'text',
+      	// 		data: 'username='+username+'&tell='+tell+'&address='+address+'&amount='+amount+'&img='+img+'&title='+title+'&price='+price+'&num='+num,
+      	// 		success:function(data){
+      	// 			alert(data[0]+data[1]);
+      	// 			var data2=data[2]+data[3];
+      	// 			var data1=data[0]+data[1];
+      	// 			if (data2=='ok') {
+      	// 				alert("订单生成成功，将为您跳转到支付页面");
+      	// 				window.location.href='aplay.html?id='+data1;
+      	// 			}else{
+      	// 				alert('订单生成失败，请重试！');
+      	// 			}
+      	// 		}
+      	// 	})
+      	// 	.done(function() {
+      	// 		console.log("success");
+      	// 	})
+      	// 	.fail(function() {
+      	// 		console.log("error");
+      	// 	})
+      	// 	.always(function() {
+      	// 		console.log("complete");
+      	// 	});
+      		
+      	// });
+      </script>
+</body>
+</html>
